@@ -28,7 +28,7 @@ AWS S3 Bucket
 
 ## Airflow Dag
 
-
+<img src="https://github.com/prve17/airflow-weather-etl-pipeline/blob/main/airflow_dag.png">
 
 
 ---
@@ -115,7 +115,7 @@ Host: https://api.openweathermap.org
 
 ## Output
 
-
+<img src="https://github.com/prve17/airflow-weather-etl-pipeline/blob/main/S3_output.png">
 
 
 ---
