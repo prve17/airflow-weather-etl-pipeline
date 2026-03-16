@@ -46,23 +46,13 @@ AWS S3 Bucket
 
 ## Project Structure
 
+```text
 weather-airflow-etl/
-|
 ├── dags/
 │   └── weather_dag.py
 ├── README.md
 └── .gitignore
-
-│
-├── pipeline.py
-├── requirements.txt
-├── README.md
-├── .env.example
-├── architecture.png
-├── dashboard.png
-├── server_monitoring_dashboard.pbix
-└── server_monitoring_pipeline_presentation.pptx
-
+```
 
 ---
 
