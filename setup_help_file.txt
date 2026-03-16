@@ -1,0 +1,71 @@
+--- First time setup
+
+-- Update system
+sudo apt update
+sudo apt upgrade -y
+sudo apt install -y python3-pip python3-venv build-essential \
+libssl-dev libffi-dev python3-dev libpq-dev
+
+-- Create Swap (VERY important for 2GB RAM)
+sudo fallocate -l 4G /swapfile
+sudo chmod 600 /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+free -h
+
+-- Start from the step Create Python virtual environment from now on below mentioned
+
+--- If airflow is not running in t3.small instance_type
+
+-- Deactivate and delete the broken environment
+deactivate
+rm -rf airflow_venv
+rm -rf ~/airflow
+
+-- Create a new virtual environment
+python3 -m venv airflow_venv
+source airflow_venv/bin/activate
+pip install --upgrade pip setuptools wheel
+
+-- Install Airflow with constraints
+pip install "apache-airflow==2.9.3" \
+--constraint "https://raw.githubusercontent.com/apache/airflow/constraints-2.9.3/constraints-3.10.txt"
+
+-- Install Airflow providers for using S3hook to upload the data into S3 bucket
+pip install apache-airflow-providers-http \
+apache-airflow-providers-amazon \
+--constraint "https://raw.githubusercontent.com/apache/airflow/constraints-2.9.3/constraints-3.10.txt"
+
+-- Install other packages
+pip install pandas s3fs
+
+-- Check all intstalled packages
+pip list | grep airflow
+
+-- set airflow home
+export AIRFLOW_HOME=~/airflow
+airflow db init (Only for first time setup)
+
+-- Reduce Airflow memory usage
+export AIRFLOW__CORE__LOAD_EXAMPLES=False
+export AIRFLOW__CORE__PARALLELISM=1
+export AIRFLOW__SCHEDULER__PARSING_PROCESSES=1
+export AIRFLOW__WEBSERVER__WORKERS=1
+airflow standalone
+
+--- Run everytime whenever want to login into airflow
+source ~/airflow_venv/bin/activate
+export AIRFLOW_HOME=~/airflow
+airflow standalone
+
+
+--- Issue: No space left on device - It can also be reduced when we increase the volume of EC2 instance inside storage(EC2 Instance >> Storage >> VolumeID  
+df -h
+du -h --max-depth=1 /home/ubuntu | sort -hr
+rm -rf ~/.vscode-server
+pip cache purge
+sudo apt clean
+rm -rf ~/.cache
+rm -rf ~/airflow/logs/*
+airflow db cleanup
+
