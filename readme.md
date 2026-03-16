@@ -12,16 +12,16 @@ The workflow is orchestrated using **Apache Airflow** and runs on an **AWS EC2 i
 
 ## Architecture
 
-OpenWeather API
-↓
-HttpSensor (Check API availability)
-↓
-HttpOperator (Extract weather data)
-↓
-PythonOperator (Transform data using Pandas)
-↓
-S3Hook (Upload processed data)
-↓
+OpenWeather API  
+↓  
+HttpSensor (Check API availability)  
+↓  
+HttpOperator (Extract weather data)  
+↓  
+PythonOperator (Transform data using Pandas)  
+↓  
+S3Hook (Upload processed data)  
+↓  
 AWS S3 Bucket
 
 ---
@@ -46,13 +46,13 @@ AWS S3 Bucket
 
 ## Project Structure
 
+```text
 weather-airflow-etl/
-│
 ├── dags/
-│ └── weather_dag.py
+│   └── weather_dag.py
 ├── README.md
 └── .gitignore
-
+```
 
 ---
 
